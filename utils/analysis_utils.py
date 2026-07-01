@@ -5,16 +5,17 @@ import matplotlib.pyplot as plt
 # É necessário instalar o pacote jinja2 (pip install jinja2)
 def df_summary_report(df):
     """
-    Descreve valores estatísticos da dataframe.
-
-    Parâmetros
-    ----------
-    df : pd.DataFrame
-        DataFrame a ser analisado.
-    Retorno
-    -------
-    pd.Series
-        Valores estatísticos e quantitativos estilizados.
+    Gera um relatório descritivos dos valores do dataframe.
+    - nome_coluna : nome da coluna
+    - tipo : tipo de dado (dtype)
+    - valores_nao_vazios : quantidade de valores não nulos
+    - valores_vazios : quantidade de valores nulos
+    - valores_unicos : quantidade de valores únicos
+    - valor_mais_frequente : valor com maior ocorrência
+    - frequencia : frequência do valor mais recorrente
+    - perc_unicidade : porcentagem de valores únicos
+    - perc_vazios : porcentagem de valores ausentes
+    - memoria_mb : consumo de memória da coluna
     """
 
     moda = df.mode().iloc[0]
