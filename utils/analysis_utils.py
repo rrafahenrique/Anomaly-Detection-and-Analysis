@@ -258,6 +258,29 @@ def plot_loggin_attempts(df, palette):
     plt.tight_layout()
     plt.show()
 #--------------------------------------------------------------------------------------------------
+def transactions_over_time(df):
+    """
+    Gera um gráfico de linha mostrando a contagem diária de transações.
+
+    O DataFrame é agrupado pela coluna 'TransactionDate', contabilizando
+    o número de transações realizadas em cada dia. Em seguida, é exibido
+    um gráfico de linha para facilitar a análise da evolução temporal 
+    das transações.
+    """
+    # Agrupe por data e conte as transações
+    daily_transactions = df.groupby(df['TransactionDate'].dt.date).size().reset_index(name='TransactionCount')
+    daily_transactions['TransactionDate'] = pd.to_datetime(daily_transactions['TransactionDate'])
+
+    plt.figure(figsize=(15, 6))  
+    sns.lineplot(x='TransactionDate', y='TransactionCount', data=daily_transactions, color="#FFA500")
+    plt.title('Contagem Diária de Transações')
+    plt.xlabel('Data')
+    plt.ylabel('Número de Transações')
+    plt.grid(True)
+    plt.tight_layout()  
+    plt.show()
+
+#---------------------------------------------------------------------------------------------------
 def plot_transaction(df, palette):
     """
     Exibe a distribuição das transações por dia da semana e meses do ano.
@@ -281,13 +304,13 @@ def plot_transaction(df, palette):
     fig, axes = plt.subplots(2, 1, figsize=(15, 7))
 
     sns.barplot(x=weekday_counts.index, y=weekday_counts.values, palette=palette[::-1], ax=axes[0])
-    axes[0].set_title('Contagem de Transações Atípicas por Dia da Semana')
+    axes[0].set_title('Contagem de Transações por Dia da Semana')
     axes[0].set_xlabel('Dia da Semana')
     axes[0].set_ylabel('Número de Transações')
     axes[0].grid(axis='y', linestyle='--')
 
     sns.barplot(x=mes_counts.index, y=mes_counts.values, palette=palette, ax=axes[1])
-    axes[1].set_title('Contagem de Transações Atípicas por Mês')
+    axes[1].set_title('Contagem de Transações por Mês')
     axes[1].set_xlabel('Meses do Ano')
     axes[1].set_ylabel('Número de Transações')
     axes[1].grid(axis='y', linestyle='--')
